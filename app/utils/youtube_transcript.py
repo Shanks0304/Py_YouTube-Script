@@ -3,6 +3,9 @@ from urllib.parse import urlparse, parse_qs
 from youtube_transcript_api import YouTubeTranscriptApi
 import nltk
 
+def import_nltk():
+    nltk.download('punkt')
+
 def extract_video_id(url):
     # Parse the URL
     parsed_url = urlparse(url)
@@ -22,15 +25,15 @@ def extract_video_id(url):
     # Return None if no video ID could be extracted
     return None
 
-def get_transcript_from_youtube(video_id: str, idx: int):
-    nltk.download('punkt')
+def get_transcript_from_youtube(video_id: str):
+    # nltk.download('punkt')
     transcript_list = YouTubeTranscriptApi.get_transcript(video_id)
     transcript = ' '.join([segment['text'] for segment in transcript_list])
     sentences = nltk.sent_tokenize(transcript)
-    context = ""
+    # context = ""
     os.makedirs("./data", exist_ok=True)
-    with open(f"./data/script{idx}.txt", "w") as txt_file:
+    with open(f"./data/{video_id}.txt", "w") as txt_file:
         for sentence in sentences:
             txt_file.write(sentence + '.\n')
-            context += sentence + '.\n'
-    return context
+            # context += sentence + '.\n'
+    print(f"transcription of {video_id} was created")
