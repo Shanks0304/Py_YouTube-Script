@@ -34,10 +34,9 @@ def gpt_response(input_context: str, reference_context: str):
         # print("respons: ", response_message)
         for chunk in response:
              if chunk.choices[0].delta.content is not None:
-                print(chunk.choices[0].delta.content, end="")
+                print(chunk.choices[0].delta.content, end="", flush=True)
 
         print("\nElapsed Time: ", time.time() - start_time)
-        print("\nThanks for using my app!")
         return True
     except Exception as e:
         print(e)

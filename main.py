@@ -25,19 +25,27 @@ def main():
     #     print(video_id)
     print("Congratulations! Training GPT model is finished, You can start now!")
     # Input the user query
-    input_context = input("Please enter the question you'd like to ask!\n")
+    while(True):
+        input_context = input("Please enter the question you'd like to ask!\n")
+        # Semantic search from input text
+        reference_context = get_context(input_context, len(lines))
+        print("\nTrained GPT is ready to work.")
+        # print(reference_context)
+        print("-------------------------------------------------------------------------------------------\n\n")
+        print("GPT is working now!")
+        isSuccess = gpt_response(
+            input_context=input_context,
+            reference_context=reference_context
+        )
+        if not isSuccess:
+            break
+        
+        isContinue = input("Thanks for using this app!, Do you want to continue to use this app? (y/n): ")
+        if isContinue == 'n':
+            break
+        if isContinue == 'y':
+            continue
 
-    # Semantic search from input text
-    reference_context = get_context(input_context, len(lines))
-    print("\nTrained GPT is ready to work.")
-    # print(reference_context)
-    print("-------------------------------------------------------------------------------------------\n\n")
-    print("GPT is working now!")
-    isSuccess = gpt_response(
-        input_context=input_context,
-        reference_context=reference_context
-    )
-          
 
 if __name__ == "__main__":
     main()
